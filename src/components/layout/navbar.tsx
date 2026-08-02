@@ -39,13 +39,13 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 md:flex h-full" aria-label="Main navigation">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                "relative flex items-center h-full px-3 text-sm font-medium transition-colors",
                 pathname === link.href
                   ? "text-foreground font-semibold"
                   : "text-muted-foreground hover:text-foreground"
@@ -53,7 +53,7 @@ export function Navbar() {
             >
               {link.label}
               {pathname === link.href && (
-                <span className="absolute inset-x-1 -bottom-[1.15rem] h-0.5 rounded-full bg-emerald" />
+                <span className="absolute bottom-0 inset-x-1 h-0.5 rounded-full bg-emerald" />
               )}
             </Link>
           ))}
@@ -64,7 +64,7 @@ export function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile controls (always visible on phone screens < 768px) */}
+        {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
