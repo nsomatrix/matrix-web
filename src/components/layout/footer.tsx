@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Gamepad2 } from "lucide-react";
+import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 
 const footerSections = [
@@ -36,10 +36,16 @@ export function Footer() {
           <div className="space-y-4">
             <Link
               href="/"
-              className="flex items-center gap-2 font-heading text-lg font-bold"
+              className="flex items-center transition-opacity hover:opacity-90 active:opacity-80"
+              aria-label="NsoMatrix Home"
             >
-              <Gamepad2 className="size-5 text-emerald" />
-              <span>NsoMatrix</span>
+              <Image
+                src="/logo.png"
+                alt="NsoMatrix"
+                width={353}
+                height={248}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground">
               Your gateway to the best gaming mods and emulators. Built by

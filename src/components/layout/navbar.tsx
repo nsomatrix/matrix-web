@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, Gamepad2 } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -28,14 +29,21 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full glass">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand Logo Only */}
         <Link
           href="/"
-          className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight text-foreground transition-opacity hover:opacity-80 active:opacity-70"
+          className="flex items-center shrink-0 transition-opacity hover:opacity-90 active:opacity-80 py-1"
+          aria-label="NsoMatrix Home"
         >
-          <Gamepad2 className="size-5 text-emerald" />
-          <span>NsoMatrix</span>
+          <Image
+            src="/logo.png"
+            alt="NsoMatrix"
+            width={353}
+            height={248}
+            priority
+            className="h-10 sm:h-11 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -45,7 +53,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "relative flex items-center h-full px-3 text-sm font-medium transition-colors",
+                "relative flex items-center h-full px-3.5 text-sm font-medium transition-colors",
                 pathname === link.href
                   ? "text-foreground font-semibold"
                   : "text-muted-foreground hover:text-foreground"
@@ -83,11 +91,17 @@ export function Navbar() {
                 <SheetTitle asChild>
                   <Link
                     href="/"
-                    className="flex items-center gap-2 font-heading text-lg font-bold text-foreground"
+                    className="flex items-center transition-opacity hover:opacity-90 active:opacity-80"
                     onClick={() => setOpen(false)}
+                    aria-label="NsoMatrix Home"
                   >
-                    <Gamepad2 className="size-5 text-emerald" />
-                    <span>NsoMatrix</span>
+                    <Image
+                      src="/logo.png"
+                      alt="NsoMatrix"
+                      width={353}
+                      height={248}
+                      className="h-10 w-auto object-contain"
+                    />
                   </Link>
                 </SheetTitle>
               </SheetHeader>
