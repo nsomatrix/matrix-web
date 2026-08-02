@@ -63,14 +63,14 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         {/* Background gradient */}
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full bg-emerald/8 blur-3xl" />
-          <div className="absolute right-0 top-1/4 h-[400px] w-[400px] rounded-full bg-emerald/5 blur-3xl" />
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full bg-brand/10 blur-3xl" />
+          <div className="absolute right-0 top-1/4 h-[400px] w-[400px] rounded-full bg-brand/5 blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center pb-16 pt-20 text-center sm:pb-24 sm:pt-32 lg:pt-40">
             {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald/20 bg-emerald/5 px-4 py-1.5 text-sm text-emerald">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/25 bg-brand/10 px-4 py-1.5 text-sm text-brand font-medium">
               <Gamepad2 className="size-3.5" />
               <span>Gaming Community Hub</span>
             </div>
@@ -90,7 +90,7 @@ export default function HomePage() {
 
             {/* CTAs */}
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="bg-emerald text-emerald-foreground hover:bg-emerald/90 h-11 px-6 text-sm">
+              <Button asChild size="lg" className="bg-brand text-brand-foreground hover:bg-brand/90 h-11 px-6 text-sm font-semibold shadow-md">
                 <Link href="/mods">
                   Browse Mods
                   <ArrowRight className="ml-1 size-4" />
@@ -121,10 +121,10 @@ export default function HomePage() {
             {features.map((feature) => (
               <Card
                 key={feature.title}
-                className="group relative overflow-hidden transition-all duration-300 hover:border-emerald/30 hover:shadow-md"
+                className="group relative overflow-hidden transition-all duration-300 hover:border-brand/40 hover:shadow-md"
               >
                 <CardHeader className="space-y-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-emerald/10 text-emerald transition-colors group-hover:bg-emerald/15">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-brand/10 text-brand transition-colors group-hover:bg-brand/20">
                     <feature.icon className="size-5" />
                   </div>
                   <CardTitle className="text-base">{feature.title}</CardTitle>
@@ -143,7 +143,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-2xl border bg-card p-8 sm:p-12 lg:p-16">
             {/* Background glow */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-emerald/8 blur-3xl" />
+            <div className="pointer-events-none absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-brand/10 blur-3xl" />
 
             <div className="relative flex flex-col items-center text-center">
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
@@ -154,7 +154,7 @@ export default function HomePage() {
                 and emulators today.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="bg-emerald text-emerald-foreground hover:bg-emerald/90 h-11 px-6 text-sm">
+                <Button asChild size="lg" className="bg-brand text-brand-foreground hover:bg-brand/90 h-11 px-6 text-sm font-semibold shadow-md">
                   <Link href="/mods">
                     Get Started
                     <ArrowRight className="ml-1 size-4" />

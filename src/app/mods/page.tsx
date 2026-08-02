@@ -13,7 +13,7 @@ export default function ModsPage() {
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       {/* Page header */}
       <div className="max-w-2xl">
-        <Badge variant="outline" className="mb-4 text-emerald border-emerald/20 bg-emerald/5">
+        <Badge variant="outline" className="mb-4 text-brand border-brand/25 bg-brand/10">
           Catalog
         </Badge>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">

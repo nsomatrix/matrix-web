@@ -61,7 +61,7 @@ export function Navbar() {
             >
               {link.label}
               {pathname === link.href && (
-                <span className="absolute bottom-0 inset-x-1 h-0.5 rounded-full bg-emerald" />
+                <span className="absolute bottom-0 inset-x-1 h-0.5 rounded-full bg-brand" />
               )}
             </Link>
           ))}
@@ -116,7 +116,7 @@ export function Navbar() {
                     className={cn(
                       "flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors",
                       pathname === link.href
-                        ? "bg-emerald/10 text-emerald font-semibold"
+                        ? "bg-brand/10 text-brand font-semibold"
                         : "text-muted-foreground hover:bg-accent hover:text-foreground active:bg-accent"
                     )}
                   >

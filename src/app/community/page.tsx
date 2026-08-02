@@ -48,7 +48,7 @@ export default function CommunityPage() {
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       {/* About section */}
       <div className="max-w-2xl">
-        <Badge variant="outline" className="mb-4 text-emerald border-emerald/20 bg-emerald/5">
+        <Badge variant="outline" className="mb-4 text-brand border-brand/25 bg-brand/10">
           Community
         </Badge>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -81,10 +81,10 @@ export default function CommunityPage() {
           {ways.map((way) => (
             <Card
               key={way.title}
-              className="group transition-all duration-300 hover:border-emerald/30 hover:shadow-md"
+              className="group transition-all duration-300 hover:border-brand/40 hover:shadow-md"
             >
               <CardHeader className="space-y-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-emerald/10 text-emerald transition-colors group-hover:bg-emerald/15">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-brand/10 text-brand transition-colors group-hover:bg-brand/20">
                   <way.icon className="size-5" />
                 </div>
                 <CardTitle className="text-base">{way.title}</CardTitle>
