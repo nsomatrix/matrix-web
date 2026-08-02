@@ -32,7 +32,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight transition-opacity hover:opacity-80 active:opacity-70"
+          className="flex items-center gap-2 font-heading text-lg font-bold tracking-tight text-foreground transition-opacity hover:opacity-80 active:opacity-70"
         >
           <Gamepad2 className="size-5 text-emerald" />
           <span>NsoMatrix</span>
@@ -53,7 +53,7 @@ export function Navbar() {
             >
               {link.label}
               {pathname === link.href && (
-                <span className="absolute inset-x-1 -bottom-[1.15rem] h-0.5 bg-emerald rounded-full" />
+                <span className="absolute inset-x-1 -bottom-[1.15rem] h-0.5 rounded-full bg-emerald" />
               )}
             </Link>
           ))}
@@ -64,7 +64,7 @@ export function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile actions */}
+        {/* Mobile controls (always visible on phone screens < 768px) */}
         <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
@@ -72,18 +72,18 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                aria-label="Open navigation menu"
-                className="size-9 touch-manipulation"
+                aria-label="Open menu"
+                className="size-10 shrink-0 text-foreground"
               >
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 p-0">
-              <SheetHeader className="border-b px-4 py-3">
+            <SheetContent side="right" className="w-80 max-w-[85vw] p-0">
+              <SheetHeader className="border-b px-5 py-4">
                 <SheetTitle asChild>
                   <Link
                     href="/"
-                    className="flex items-center gap-2 font-heading text-lg font-bold"
+                    className="flex items-center gap-2 font-heading text-lg font-bold text-foreground"
                     onClick={() => setOpen(false)}
                   >
                     <Gamepad2 className="size-5 text-emerald" />
@@ -100,7 +100,7 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center rounded-lg px-3 py-3 text-base font-medium transition-colors touch-manipulation",
+                      "flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors",
                       pathname === link.href
                         ? "bg-emerald/10 text-emerald font-semibold"
                         : "text-muted-foreground hover:bg-accent hover:text-foreground active:bg-accent"
