@@ -108,40 +108,33 @@ export function BlackHole() {
     controls.enableZoom = false;
     controls.enablePan = false;
 
-    /* ── core black hole ──────────────────────────────── */
+    /* ── core: black hole + logo at center ───────────── */
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    const bhMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-    const bhGeo = new THREE.SphereGeometry(4, 64, 64);
-    coreGroup.add(new THREE.Mesh(bhGeo, bhMat));
+    // Keep dummy auraMat for state transition compatibility
+    const auraMat = { uniforms: { uIntensity: { value: 1.0 }, uTime: { value: 0 } } };
 
-    /* ── aura glow ────────────────────────────────────── */
-    const auraMat = new THREE.ShaderMaterial({
-      uniforms: { uTime: { value: 0 }, uIntensity: { value: 1.0 } },
-      vertexShader: /* glsl */ `
-        varying vec3 vNormal;
-        varying vec3 vView;
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vView = normalize(-(modelViewMatrix * vec4(position,1.0)).xyz);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform float uIntensity;
-        varying vec3 vNormal;
-        varying vec3 vView;
-        void main() {
-          float rim = pow(1.0 - max(dot(vNormal, vView), 0.0), 4.0);
-          gl_FragColor = vec4(vec3(1.0, 0.45, 0.1) * rim * uIntensity * 5.0, 1.0);
-        }
-      `,
-      side: THREE.BackSide,
+    // Load logo texture with crisp alpha filtering
+    const textureLoader = new THREE.TextureLoader();
+    const logoTexture = textureLoader.load("/logo.png");
+    logoTexture.colorSpace = THREE.SRGBColorSpace;
+    logoTexture.minFilter = THREE.LinearFilter;
+    logoTexture.magFilter = THREE.LinearFilter;
+
+    // Premium crisp Logo Sprite (always faces camera, sized prominently)
+    const logoMat = new THREE.SpriteMaterial({
+      map: logoTexture,
       transparent: true,
-      blending: THREE.AdditiveBlending,
+      blending: THREE.NormalBlending,
+      depthTest: true,
+      depthWrite: false,
     });
-    coreGroup.add(new THREE.Mesh(new THREE.SphereGeometry(4.25, 64, 64), auraMat));
+    const logoSprite = new THREE.Sprite(logoMat);
+    logoSprite.scale.set(18, 12.64, 1); // Prominent size (aspect ratio 353:248)
+    logoSprite.position.set(0, 0, 0);
+    logoSprite.renderOrder = 10;
+    coreGroup.add(logoSprite);
 
     /* ── accretion disk (instanced) ───────────────────── */
     const instanceCount = 5000;
@@ -257,6 +250,12 @@ export function BlackHole() {
       auraMat.uniforms.uTime.value = time;
       instancedDisk.rotation.y += 0.0005;
 
+      // Subtle floating bob & breathing scale for logo
+      const breathe = 1.0 + 0.03 * Math.sin(time * 1.5);
+      const floatY = 0.2 * Math.sin(time * 1.2);
+      logoSprite.scale.set(18 * breathe, 12.64 * breathe, 1);
+      logoSprite.position.y = floatY;
+
       const currentDir = new THREE.Vector3()
         .subVectors(camera.position, controls.target)
         .normalize();
@@ -304,6 +303,7 @@ export function BlackHole() {
         zIndex: 0,
         overflow: "hidden",
         background: "radial-gradient(circle at center, #010103 30%, #000 100%)",
+        pointerEvents: "none",
       }}
     >
       {/* Vignette overlay */}
