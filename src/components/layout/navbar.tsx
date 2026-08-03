@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetHeader,
 } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/theme-toggle";
+
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -67,14 +67,10 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Desktop actions */}
-        <div className="hidden items-center gap-2 md:flex">
-          <ThemeToggle />
-        </div>
+
 
         {/* Mobile controls */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button

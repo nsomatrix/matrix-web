@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BlackHole } from "@/components/black-hole";
 
 const features = [
   {
@@ -60,29 +61,26 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ────────────────────────────────────────── */}
-      <section className="relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full bg-brand/10 blur-3xl" />
-          <div className="absolute right-0 top-1/4 h-[400px] w-[400px] rounded-full bg-brand/5 blur-3xl" />
-        </div>
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center" style={{ background: "#010103" }}>
+        {/* Three.js Black Hole background */}
+        <BlackHole />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex flex-col items-center pb-16 pt-20 text-center sm:pb-24 sm:pt-32 lg:pt-40">
             {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/25 bg-brand/10 px-4 py-1.5 text-sm text-brand font-medium">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/25 bg-brand/10 px-4 py-1.5 text-sm text-brand font-medium backdrop-blur-sm">
               <Gamepad2 className="size-3.5" />
               <span>Gaming Community Hub</span>
             </div>
 
             {/* Heading */}
-            <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl text-white drop-shadow-lg">
               Your home for{" "}
               <span className="gradient-text">mods & emulators</span>
             </h1>
 
             {/* Subtext */}
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg drop-shadow-md">
               NsoMatrix is a community-driven platform where gamers discover,
               download, and share the best mods and emulators — all in one
               clean, safe hub.
@@ -96,7 +94,7 @@ export default function HomePage() {
                   <ArrowRight className="ml-1 size-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-11 px-6 text-sm">
+              <Button asChild variant="outline" size="lg" className="h-11 px-6 text-sm border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
                 <Link href="/emulators">Get Emulators</Link>
               </Button>
             </div>
