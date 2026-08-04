@@ -108,7 +108,80 @@ export function BlackHole() {
     controls.enableZoom = false;
     controls.enablePan = false;
 
-    /* ── core: black hole + logo at center ───────────── */
+    /* ── glassmorphic dark cosmic dish texture generators ── */
+    function createDishTopTexture() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        const cx = 256;
+        const cy = 256;
+        const r = 230;
+
+        ctx.clearRect(0, 0, 512, 512);
+
+        // 1. Dark Frosted Glass Fill (High contrast backdrop for clean logo readability)
+        const glassGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, r);
+        glassGrad.addColorStop(0, "rgba(8, 10, 20, 0.75)");
+        glassGrad.addColorStop(0.5, "rgba(14, 18, 35, 0.50)");
+        glassGrad.addColorStop(0.85, "rgba(22, 28, 50, 0.25)");
+        glassGrad.addColorStop(0.96, "rgba(255, 150, 60, 0.35)");
+        glassGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = glassGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. Dual Accent Rim Ring (Harmonizes with black hole warm amber & indigo particles)
+        const rimGrad = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+        rimGrad.addColorStop(0, "rgba(255, 140, 50, 0.45)");
+        rimGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.20)");
+        rimGrad.addColorStop(1, "rgba(80, 160, 255, 0.45)");
+
+        ctx.strokeStyle = rimGrad;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.94, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // 3. Subtle Inner Specular Reflection
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.7, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      return texture;
+    }
+
+    function createUnderGlowTexture() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        const cx = 256;
+        const cy = 256;
+        const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, 240);
+        grad.addColorStop(0, "rgba(255, 130, 40, 0.35)");
+        grad.addColorStop(0.4, "rgba(100, 160, 255, 0.18)");
+        grad.addColorStop(0.75, "rgba(40, 60, 120, 0.05)");
+        grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 512, 512);
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    }
+
+    /* ── core: black hole + logo + glass dish platform ───────────── */
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
@@ -135,6 +208,71 @@ export function BlackHole() {
     logoSprite.position.set(0, 0, 0);
     logoSprite.renderOrder = 10;
     coreGroup.add(logoSprite);
+
+    /* ── 3D Glassmorphic Underdish Platform Structure (Centered Dark Cosmic Lens) ── */
+    const platformGroup = new THREE.Group();
+    platformGroup.position.set(0, 0, 0);
+    coreGroup.add(platformGroup);
+
+    // 1. Sleek Dark Glass Core Body
+    const dishGeo = new THREE.CylinderGeometry(10, 8.5, 0.4, 64, 1, true);
+    const dishMat = new THREE.MeshBasicMaterial({
+      color: 0x0c1020,
+      transparent: true,
+      opacity: 0.35,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    const dishMesh = new THREE.Mesh(dishGeo, dishMat);
+    platformGroup.add(dishMesh);
+
+    // 2. Dish Top Glass Surface Disc
+    const dishTopGeo = new THREE.CircleGeometry(10, 64);
+    dishTopGeo.rotateX(-Math.PI / 2);
+    const dishTopMat = new THREE.MeshBasicMaterial({
+      map: createDishTopTexture(),
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    });
+    const dishTopMesh = new THREE.Mesh(dishTopGeo, dishTopMat);
+    dishTopMesh.position.y = 0.2;
+    platformGroup.add(dishTopMesh);
+
+    // 3. Top Accent Glass Rim Ring (Soft warm-amber glow matching accretion disk)
+    const topRimGeo = new THREE.TorusGeometry(10, 0.12, 16, 64);
+    topRimGeo.rotateX(Math.PI / 2);
+    const rimMat = new THREE.MeshBasicMaterial({
+      color: 0xffa050,
+      transparent: true,
+      opacity: 0.45,
+      depthWrite: false,
+    });
+    const topRimMesh = new THREE.Mesh(topRimGeo, rimMat);
+    topRimMesh.position.y = 0.2;
+    platformGroup.add(topRimMesh);
+
+    // 4. Bottom Base Glass Rim Ring
+    const botRimGeo = new THREE.TorusGeometry(8.5, 0.1, 16, 64);
+    botRimGeo.rotateX(Math.PI / 2);
+    const botRimMesh = new THREE.Mesh(botRimGeo, rimMat);
+    botRimMesh.position.y = -0.2;
+    platformGroup.add(botRimMesh);
+
+    // 5. Under-Glow Halo Disk
+    const glowGeo = new THREE.PlaneGeometry(24, 24);
+    glowGeo.rotateX(-Math.PI / 2);
+    const glowMat = new THREE.MeshBasicMaterial({
+      map: createUnderGlowTexture(),
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      opacity: 0.4,
+    });
+    const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+    glowMesh.position.y = 0;
+    platformGroup.add(glowMesh);
 
     /* ── accretion disk (instanced) ───────────────────── */
     const instanceCount = 5000;
@@ -250,11 +388,15 @@ export function BlackHole() {
       auraMat.uniforms.uTime.value = time;
       instancedDisk.rotation.y += 0.0005;
 
-      // Subtle floating bob & breathing scale for logo
+      // Subtle floating bob & breathing scale for logo & glass dish platform
       const breathe = 1.0 + 0.03 * Math.sin(time * 1.5);
       const floatY = 0.2 * Math.sin(time * 1.2);
       logoSprite.scale.set(18 * breathe, 12.64 * breathe, 1);
       logoSprite.position.y = floatY;
+
+      platformGroup.position.y = floatY;
+      platformGroup.scale.set(breathe, 1.0, breathe);
+      platformGroup.rotation.y += 0.002;
 
       const currentDir = new THREE.Vector3()
         .subVectors(camera.position, controls.target)
